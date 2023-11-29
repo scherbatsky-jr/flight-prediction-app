@@ -1,20 +1,23 @@
 import express from 'express';
+import { createServer } from 'http';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
 import serveStatic from 'serve-static';
-import path, { fileURLToPath } from 'path';
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __dirname = dirname(__filename);
 
 const app = express();
+const server = createServer(app);
 
-app.use('/', serveStatic(path.join(__dirname, '/dist')));
+app.use('/', serveStatic(join(__dirname, 'dist')));
 
-app.get(/.*/, function (req, res) {
-  res.sendFile(path.join(__dirname, '/dist/index.html'));
+app.get(/.*/, (req, res) => {
+  res.sendFile(join(__dirname, 'dist', 'index.html'));
 });
 
 const port = process.env.PORT || 8080;
 
-app.listen(port, '0.0.0.0', function () {
+server.listen(port, '0.0.0.0', () => {
   console.log('Vue app started!');
 });
