@@ -55,6 +55,7 @@
             <div class="spinner-border" v-if="loading"></div>
             <div v-else>
                 <h6 class="mb-3" v-if="results.length">We have found following flights for the information you have provide</h6>
+                <h6 v-if="showNoFlights">No flights were found per your search.</h6>
                 <div v-for="result in results" class="result">
                     <div>
                         <h6>Flight Infromation</h6>
@@ -79,7 +80,7 @@
                     </div>
                     <div>
                         <h6>Flight Forecast</h6>
-                        <p>Expected Delay: 10min</p>
+                        <p>{{  getDelayInfo(result) }}</p>
                     </div>
                 </div>
             </div>
@@ -91,6 +92,7 @@
 import airports from "@/constants/airports"
 // import { getPredictions } from "@/api/app" 
 import client from "@/apolloClient"
+import { setTransitionHooks } from "vue";
 export default {
     name: 'Home',
 
@@ -100,9 +102,8 @@ export default {
             destination: null,
             date: null,
             loading: false,
-            results: [
-            
-            ]
+            results: [],
+            showNoFlights: false
         }
     },
 
@@ -138,6 +139,7 @@ export default {
     methods: {
         onSearch() {
             this.loading = true
+            this.showNoFlights = false
 
             const dateObject = new Date(this.date);
 
@@ -160,6 +162,10 @@ export default {
             client.post('/predictions', data)
                 .then(response => {
                     this.results = response.data
+
+                    if (!this.results.length) {
+                        this.showNoFlights = true
+                    }
                 })
                 .catch(err => {
                     throw err
@@ -194,6 +200,14 @@ export default {
             }
 
             return 'Error'
+        },
+
+        getDelayInfo(result) {
+            if (result.prediction) {
+                return `${(result.probability * 100).toFixed(2)}% that flight will be delayed more than ${(result.delay_minutes + 15).toFixed(2)} minutes`
+            } else {
+                return `${(result.probability * 100).toFixed(2)}% that flight won't be delayed more than 15 minutes.`
+            }
         }
     },
 
@@ -233,7 +247,7 @@ export default {
         border: none;
         box-shadow: 0px 0px 10px grey;
         border-radius: 0.5rem;
-        grid-template-columns: 0.75fr 1fr 1fr 0.75fr 0.5fr;
+        grid-template-columns: 0.75fr 0.5fr 0.5fr 0.75fr 0.5fr;
         grid-gap: 1rem;
         margin-bottom: 1rem
     }
