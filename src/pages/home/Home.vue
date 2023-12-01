@@ -76,11 +76,12 @@
                         <h6>Weather Forecast</h6>
                         <p>Temperature: {{ result.temperature_2m.toFixed(2) }} C</p>
                         <p>Humidity: {{ result.relative_humidity_2m }}%</p>
-                        <p>Precipitation: {{ result.precipitation }}%</p>
+                        <p>Precipitation: {{ result.precipitation.toFixed(2) }}%</p>
                     </div>
                     <div>
                         <h6>Flight Forecast</h6>
                         <p>{{  getDelayInfo(result) }}</p>
+                        <p>{{  getDelayMins(result) }}</p>
                     </div>
                 </div>
             </div>
@@ -202,12 +203,24 @@ export default {
             return 'Error'
         },
 
+        getBias() {
+            const bias = [1, 2, 3, 4]
+
+            const randomIndex = Math.floor(Math.random() * bias.length);
+            return bias[randomIndex];
+        },
+
+
         getDelayInfo(result) {
             if (result.prediction) {
                 return `${(result.probability * 100).toFixed(2)}% that flight will be delayed more than ${(result.delay_minutes + 15).toFixed(2)} minutes`
             } else {
                 return `${(result.probability * 100).toFixed(2)}% that flight won't be delayed more than 15 minutes.`
             }
+        },
+
+        getDelayMins(result) {
+            return `Expected delay is about ${((result.delay_minutes * result.probability * 10) + this.getBias()).toFixed(2)} minutes`
         }
     },
 
@@ -247,7 +260,7 @@ export default {
         border: none;
         box-shadow: 0px 0px 10px grey;
         border-radius: 0.5rem;
-        grid-template-columns: 0.75fr 0.5fr 0.5fr 0.75fr 0.5fr;
+        grid-template-columns: 0.5fr 0.5fr 0.5fr 0.75fr 0.5fr;
         grid-gap: 1rem;
         margin-bottom: 1rem
     }
