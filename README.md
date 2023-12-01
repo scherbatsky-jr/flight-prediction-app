@@ -1,7 +1,44 @@
-# Vue 3 + Vite
+# Flight Prediction App
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+This project is accordance to Machine Learning Course for 2023 August Semester in Asian Institute of Tenchnology, Thailand. The contributors to this project are as follows (alphabetically):
 
-## Recommended IDE Setup
+- Biraj Koirala
+- Jannutun Nayeem
+- Jiewen Shen
+- Stabya Acharya
+- Sunil Prajapati
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+
+## Description
+
+This project serves as the frontend part for the flight prediction api. It serves a simple page to input origin and destination airport along with the date.
+
+The api is currently deployed with Heroku at: https://flight-prediction-api-e1805e5c4a40.herokuapp.com/
+
+Demo:
+
+![External GIF](src/assets/demo.gif)
+
+### To run the app locally
+Pre-requisites:
+
+- Node
+- Vite
+- Yarn
+
+First install all the packages using the command
+
+`yarn install`
+
+Copy the .env.example to .env and update the environment variables as necessary
+
+```
+VITE_API_BASE_URL=http://localhost:4000
+```
+
+Run the developmental server using command
+
+`yarn dev`
+
+The app should be avaiable at http://localhost:5173
+
