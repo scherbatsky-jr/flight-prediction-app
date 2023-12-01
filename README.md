@@ -13,7 +13,7 @@ This project is accordance to Machine Learning Course for 2023 August Semester i
 
 This project serves as the frontend part for the flight prediction api. It serves a simple page to input origin and destination airport along with the date.
 
-The api is currently deployed with Heroku at: https://flight-prediction-api-e1805e5c4a40.herokuapp.com/
+The api is currently deployed with Heroku at: https://flight-prediction-app-c37d96ccd689.herokuapp.com/
 
 Demo:
 
